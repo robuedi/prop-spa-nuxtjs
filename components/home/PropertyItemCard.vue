@@ -22,7 +22,6 @@
 </template>
 
 <script>
-
 export default {
     props: {
         property: Object
@@ -35,18 +34,15 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
+<style scoped lang="css">
 
 .card-img-top {
     height: 250px;
     overflow: hidden;
-    img {
+
+}
+.card-img-top img {
         height:100%;
         object-fit: cover;
     }
-}
 </style>
-
-
-
-
