@@ -28,3 +28,4 @@ Vue.filter("parseInt", function (value) {
     }
     return parseInt(value);
 });
+

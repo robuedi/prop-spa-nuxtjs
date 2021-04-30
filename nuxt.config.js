@@ -26,6 +26,8 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
+    '~plugins/filters.js',
+    '~plugins/mixin'
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -36,7 +38,9 @@ export default {
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: ['@nuxtjs/axios'],
+  modules: [
+    '@nuxtjs/axios',
+  ],
 
   axios: {
     baseURL: 'http://localhost:8001/', // Used as fallback if no runtime config is provided
@@ -44,5 +48,16 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+    babel: {
+      "presets": [
+        [
+          "@babel/preset-env",
+          {
+            "loose": true,
+            "shippedProposals": true
+          }
+        ]
+      ]
+    }
   }
 }
