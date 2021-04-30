@@ -1,7 +1,7 @@
 <template>
     <div class="card " @click="redirectToProperty">
         <div class="card-img-top" v-if="property.images !== 'undefined' && property.images.length > 0 ">
-            <img :src="property.images[0].path" alt="Card image cap">
+            <img :src="imagesBaseURL + property.images[0].path" alt="Card image cap">
         </div>
         <div class="card-body">
 <!--            <template v-if="property.user_type">-->
@@ -21,10 +21,19 @@
     </div>
 </template>
 
+
 <script>
+
+import serversConf from  '../../plugins/serversConf'
+
 export default {
     props: {
         property: Object
+    },
+    data() {
+      return {
+        imagesBaseURL: serversConf.imagesBaseURL
+      }
     },
     methods: {
         redirectToProperty() {

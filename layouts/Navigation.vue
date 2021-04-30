@@ -10,7 +10,7 @@
                 <!-- Right Side Of Navbar -->
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item dropdown">
-                        <router-link class="nav-link" :to="{ name: 'home' }">Home</router-link>
+                        <router-link class="nav-link" :to="{ name: 'index' }">Home</router-link>
                     </li>
 
                     <template v-if="!authenticated">

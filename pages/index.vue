@@ -1,73 +1,47 @@
 <template>
-  <div class="container">
     <div>
-      <Logo />
-      <h1 class="title">
-        properties-nuxt
-      </h1>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--green"
-        >
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--grey"
-        >
-          GitHub
-        </a>
-      </div>
+        <h1>Properties</h1>
+        <p v-if="loadingProperties">Loading properties...</p>
+        <template v-else>
+            <div class="card-columns" v-if="properties.length > 0">
+                <PropertyItemCard v-for="property in properties" :key="property.slug" :property="property"/>
+            </div>
+            <p v-else >No properties yet.</p>
+        </template>
     </div>
-  </div>
 </template>
 
 <script>
-export default {}
+import PropertyItemCard from "../components/home/PropertyItemCard";
+import QueryBuilder from "../api/QueryBuilder";
+import Property from "../api/models/Property";
+
+export default {
+    components: {
+        PropertyItemCard
+    },
+    data() {
+        return {
+            loadingProperties: true,
+            properties: []
+        }
+    },
+    mounted() {
+        //make the query string
+        const query = new QueryBuilder();
+        query.setInclude(['address', 'address.city', 'address.city.country', 'images'])
+        query.setFields('properties', ['id', 'name', 'slug', 'created_at'])
+        query.setFields('address', ['id', 'property_id', 'city_id', 'postcode', 'address_line'])
+        query.setFields('address.city', ['id', 'country_id', 'name'])
+        query.setFields('address.city.country', ['id', 'name'])
+        query.setFields('images', [ 'path'])
+
+        //fetch data
+        Property.all(query.get()).then((res) => {
+            this.properties = res.data.data
+        }).finally(()=>{
+            this.loadingProperties = false
+        })
+    },
+}
 </script>
-
-<style>
-.container {
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
-.title {
-  font-family:
-    'Quicksand',
-    'Source Sans Pro',
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    'Helvetica Neue',
-    Arial,
-    sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
-}
-
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-
-.links {
-  padding-top: 15px;
-}
-</style>

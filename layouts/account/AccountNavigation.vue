@@ -11,7 +11,7 @@
 
 <script>
 
-import apiStates from "../../extra/account/rolesSections";
+import rolesSections from "../../plugins/account/rolesSections";
 import { mapGetters } from 'vuex'
 
 export default {
@@ -30,7 +30,7 @@ export default {
         ]),
     },
     mounted() {
-        this.btns = apiStates
+        this.btns = rolesSections
     },
     methods: {
         setActiveSection(sectionName)
