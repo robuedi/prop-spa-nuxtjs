@@ -5,12 +5,12 @@ const END_POINT = 'properties'
 
 export default {
 
-    all(query = ''){
-        return Api.get(`${VERSION}/${END_POINT}${query}`);
+    async all(query = ''){
+        return await Api.get(`${VERSION}/${END_POINT}${query}`);
     },
 
-    showSlug(slug, query = ''){
-        return Api.get(`${VERSION}/${END_POINT}/${slug}${query}`);
+    async showSlug(slug, query = ''){
+        return await Api.get(`${VERSION}/${END_POINT}/${slug}${query}`);
     },
 
 }

@@ -1,6 +1,6 @@
 <template>
     <div class="card" v-if="property">
-        <div class="card-img-top" v-if="property.images !== 'undefined' && property.images.length > 0 " :style='`background-image: url("/${property.images[0].path}"`' alt="Card image cap"></div>
+        <div class="card-img-top" v-if="property.images !== 'undefined' && property.images.length > 0 " :style='`background-image: url("${imagesBaseURL}${property.images[0].path}"`' alt="Card image cap"></div>
         <div class="card-body">
             <h5 class="card-title mb-4">{{property.name}}</h5>
             <button type="button" @click="bookProperty()" class="btn btn-primary mb-4">{{ 'property.type.name' | capitalize }}</button>
@@ -23,6 +23,7 @@ import { mapGetters } from 'vuex'
 import QueryBuilder from "../../api/QueryBuilder";
 import PropertyApplications from "../../api/models/PropertyApplications";
 import Property from "../../api/models/Property";
+import serversConf from  '../../plugins/serversConf'
 
 export default {
     computed: {
@@ -32,11 +33,12 @@ export default {
     },
     data: () => {
         return {
-            property: null
+            property: null,
+            imagesBaseURL: serversConf.imagesBaseURL
         }
     },
-    mounted() {
-        Property.showSlug(this.$route.params.Property, this.getQueryString()).then((res)=>{
+    async fetch() {
+        await Property.showSlug(this.$route.params.Property, this.getQueryString()).then((res)=>{
             this.property = res.data.data
         })
     },

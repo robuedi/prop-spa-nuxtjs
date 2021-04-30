@@ -26,7 +26,7 @@ export default {
             properties: []
         }
     },
-    mounted() {
+    async fetch() {
         //make the query string
         const query = new QueryBuilder();
         query.setInclude(['address', 'address.city', 'address.city.country', 'images'])
@@ -37,7 +37,7 @@ export default {
         query.setFields('images', [ 'path'])
 
         //fetch data
-        Property.all(query.get()).then((res) => {
+        await Property.all(query.get()).then((res) => {
             this.properties = res.data.data
         }).finally(()=>{
             this.loadingProperties = false
