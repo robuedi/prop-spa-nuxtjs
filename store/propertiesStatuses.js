@@ -1,3 +1,5 @@
+import Api from '../api/Api'
+
 export const state = () => ({
   statuses: [],
 })
@@ -21,7 +23,7 @@ export const actions = {
       return
     }
 
-    await axios.get('/api/v1/property-statuses?fields=id,name').then((response) => {
+    await Api.get('/v1/property-statuses?fields=id,name').then((response) => {
       commit('SET_STATUSES', response.data.data)
       return response
     }).catch((err) => {
@@ -29,4 +31,9 @@ export const actions = {
       throw err
     })
   },
+}
+
+export default {
+  actions,
+  getters
 }

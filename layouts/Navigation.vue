@@ -13,17 +13,17 @@
                         <router-link class="nav-link" :to="{ name: 'index' }">Home</router-link>
                     </li>
 
-                    <template v-if="!authenticated">
-                        <li class="nav-item dropdown">
-                            <router-link class="nav-link" :to="{ name: 'signIn' }">Sign In</router-link>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <router-link class="nav-link" :to="{ name: 'register' }">Register</router-link>
-                        </li>
+                    <template v-if="this.$auth.loggedIn">
+                      <router-link class="nav-link" :to="{ name: 'account' }"  >{{ this.$auth.user.name }}</router-link>
+                      <a href="#" class="nav-link" @click.prevent="signOut" >Sign out</a>
                     </template>
-                    <template v-else-if="authenticated">
-                        <router-link class="nav-link" :to="{ name: 'accountProfile' }"  >{{ user.name }}</router-link>
-                        <a href="#" class="nav-link" @click.prevent="signOut" >Sign out</a>
+                    <template v-else >
+                      <li class="nav-item dropdown">
+                        <router-link class="nav-link" :to="{ name: 'signIn' }">Sign In</router-link>
+                      </li>
+                      <li class="nav-item dropdown">
+                        <router-link class="nav-link" :to="{ name: 'register' }">Register</router-link>
+                      </li>
                     </template>
 <!--                    <template v-else-if="profileCompleted">-->
 <!--                        <router-link class="nav-link" to="/account"  >{{ user.name }}</router-link>-->
@@ -44,12 +44,12 @@ import {mapActions, mapGetters} from 'vuex'
 export default {
     computed: {
         ...mapGetters({
-            authenticated: 'auth/authenticated',
-            user: 'auth/user',
+            user: "auth_/user",
+            authenticated: "auth_/authenticated",
         })
     },
     methods: {
-        ...mapActions('auth', {
+        ...mapActions('auth_', {
             signOutAction: 'signOut'
         }),
         async signOut () {

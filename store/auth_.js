@@ -1,4 +1,5 @@
 import apiStates from "./apiStates/apiStateValues";
+import Api from '../api/Api'
 
 export const state = () => ({
   authApiState: apiStates.INIT,
@@ -53,52 +54,38 @@ export const getters = {
     return state.authApiState
   },
 }
+
+//make form data
+// const formData = new FormData();
+// formData.append('email', credentials.email)
+// formData.append('password', credentials.password)
+//
+// return this.$auth.loginWith('laravelSanctum', {
+//   data: formData
+// })
 export const actions = {
   async signIn ({ dispatch }, credentials) {
-    await axios.get('/sanctum/csrf-cookie')
-    return axios.post('/api/login', credentials).then((res) =>{
-      return dispatch('me').then(() => {
-        return res
-      })
-    }).catch((error) => {
-      return dispatch('me').then(() => {
-        throw error
-      })
+    this.$auth.loginWith('laravelSanctum', {
+      data: {
+        email: credentials.email,
+        password: credentials.password
+      }
     })
   },
 
   async register ({ dispatch }, user) {
-    await axios.get('/sanctum/csrf-cookie')
-    return axios.post('/api/register', user)
+    await Api.get('/sanctum/csrf-cookie')
+    return Api.post('/register', user)
   },
 
   async signOut ({ dispatch }) {
-    await axios.post('/api/logout').then(() => {
+    await Api.post('/logout').then(() => {
       return dispatch('me')
     })
   },
 
-  async checkUserProfileComplete({dispatch}, data)
-  {
-    return await axios.put(`/api/v1/roles-users/${data.roleUserId}`, data.data).then((res) => {
-      return dispatch('me').then(() => {
-        return res;
-      })
-    });
-  },
-
-  setActiveRole({dispatch, commit}, activeRole)
-  {
-    commit('SET_ACTIVE_ROLE', activeRole)
-    axios.put(`/api/v1/roles-users/${activeRole.id}`, {is_used: 1}).then((res) => {
-      return dispatch('me').then(() => {
-        return res;
-      })
-    });
-  },
-
   async me ({ commit }) {
-    return await axios.get('/api/user').then((response) => {
+    return await Api.get('/user').then((response) => {
       commit('SET_AUTHENTICATED', true)
       commit('SET_USER', response.data)
       commit('SET_AUTH_API_STATE', apiStates.LOADED)
@@ -117,3 +104,9 @@ export const actions = {
 }
 
 
+export default {
+  state,
+  mutations,
+  actions,
+  getters
+}

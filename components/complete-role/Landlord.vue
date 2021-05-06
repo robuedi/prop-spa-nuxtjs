@@ -1,8 +1,8 @@
 <template>
     <div>
         <template >
-            <AgencyInfo :roleUserId="this.roleUserId | parseInt" v-if="activeStep === 0" v-on:hasAgencyInfo="hasAgencyInfo"/>
-            <AgencyAddress :agencyId="this.data.agencyId | parseInt" v-if="activeStep === 1" v-on:hasAgencyAddress="addressCompleted()"/>
+            <AgencyInfo :roleUserId="this.roleUserId | parseInteger" v-if="activeStep === 0" v-on:hasAgencyInfo="hasAgencyInfo"/>
+            <AgencyAddress :agencyId="this.data.agencyId | parseInteger" v-if="activeStep === 1" v-on:hasAgencyAddress="addressCompleted()"/>
         </template>
     </div>
 </template>

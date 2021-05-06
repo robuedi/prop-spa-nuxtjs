@@ -1,12 +1,15 @@
 import Api from '../Api'
 
 const VERSION = 'v1'
-const END_POINT = () => `users/${store.getters['auth/userId']}/roles-users`
+const END_POINT = () => `roles-users`
 
 export default {
-    store(roleId){
-      //TODO FIX THIS
-      return Api.post(`${VERSION}/${END_POINT('99')}`, {role_id: roleId});
+    store(data){
+      return Api.post(`${VERSION}/${END_POINT()}`, data);
+    },
+
+    update(roleId, data){
+      return Api.put(`${VERSION}/${END_POINT()}/${roleId}`, data);
     },
 }
 

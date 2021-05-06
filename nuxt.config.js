@@ -40,24 +40,36 @@ export default {
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     '@nuxtjs/axios',
+    '@nuxtjs/auth-next'
   ],
 
   axios: {
     baseURL: 'http://localhost:8001/', // Used as fallback if no runtime config is provided
+    credentials: true,
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
-    babel: {
-      "presets": [
-        [
-          "@babel/preset-env",
-          {
-            "loose": true,
-            "shippedProposals": true
+    babel: { //to avoid some npm run dev warnings
+      plugins: [
+        '@babel/plugin-proposal-class-properties',
+        '@babel/plugin-proposal-private-methods',
+      ],
+    }
+  },
+
+  auth: {
+    strategies: {
+      'laravelSanctum': {
+        provider: 'laravel/sanctum',
+        url: 'http://localhost:8000/api',
+        endpoints: {
+          user: {
+            url: '/user',
           }
-        ]
-      ]
+        }
+      },
     }
   }
+
 }

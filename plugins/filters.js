@@ -22,7 +22,7 @@ Vue.filter("datetime", function (value) {
     return Moment(value).format("Do MMMM YYYY HH:mm");
 });
 
-Vue.filter("parseInt", function (value) {
+Vue.filter("parseInteger", function (value) {
     if(!value) {
         return ''
     }

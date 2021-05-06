@@ -20,17 +20,46 @@
 <script>
 import AccountNavigation from "../../layouts/account/AccountNavigation";
 import {mapGetters} from "vuex";
+import apiStates from "@/store/apiStates/apiStateValues";
 
 export default {
     components: {
         AccountNavigation
     },
     computed: {
-        ...mapGetters('auth',{
-            user: 'user',
-            activeRole: 'activeRole'
-        }),
+      ...mapGetters('user', {
+        activeRole: 'activeRole',
+        apiState: 'authApiState'
+      }),
+      apiStateLoaded() {
+        return this.apiState === apiStates.LOADED;
+      },
+      apiStateLoading() {
+        return this.apiState === apiStates.INIT || this.apiState === apiStates.LOADING;
+      }
     },
+    watch: {
+      apiStateLoaded() {
+        this.profileCompletedCheck();
+      }
+    },
+    methods: {
+      profileCompletedCheck()
+      {
+        if(!this.$auth.user)
+        {
+          this.$router.push({name: 'signIn'})
+        }
+
+        if(!this.activeRole)
+        {
+          this.$router.push({name: 'roles'})
+        }
+      }
+    },
+    mounted() {
+      this.profileCompletedCheck()
+    }
 }
 </script>
 

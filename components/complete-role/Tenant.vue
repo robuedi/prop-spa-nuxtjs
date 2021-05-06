@@ -1,10 +1,10 @@
 <template>
     <div>
         <template >
-            <AnnualSalary :roleUserId="this.roleUserId | parseInt" v-if="activeStep === 0" v-on:hasAnnualSalary="annualSalaryCompleted()"/>
-            <Rent :roleUserId="this.roleUserId | parseInt" v-if="activeStep === 1" v-on:hasRent="rentCompleted()"/>
-            <Employment :roleUserId="this.roleUserId | parseInt" v-if="activeStep === 2" v-on:hasEmployment="employmentCompleted()"/>
-            <RoleUserAddress :roleUserId="this.roleUserId | parseInt" v-if="activeStep === 3" v-on:hasAddress="addressCompleted()"/>
+            <AnnualSalary :roleUserId="this.roleUserId | parseInteger" v-if="activeStep === 0" v-on:hasAnnualSalary="annualSalaryCompleted()"/>
+            <Rent :roleUserId="this.roleUserId | parseInteger" v-if="activeStep === 1" v-on:hasRent="rentCompleted()"/>
+            <Employment :roleUserId="this.roleUserId | parseInteger" v-if="activeStep === 2" v-on:hasEmployment="employmentCompleted()"/>
+            <RoleUserAddress :roleUserId="this.roleUserId | parseInteger" v-if="activeStep === 3" v-on:hasAddress="addressCompleted()"/>
         </template>
     </div>
 </template>

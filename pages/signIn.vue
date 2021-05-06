@@ -19,6 +19,7 @@
 <script>
 import NotificationLabels from "../components/NotificationLabels";
 import {mapActions, mapGetters} from 'vuex'
+import RoleUser from "../api/models/RoleUser";
 
 export default {
     components: {
@@ -33,34 +34,35 @@ export default {
             }
         }
     },
-    computed: {
-        ...mapGetters('auth', ['user'])
-    },
     methods: {
-        ...mapActions('auth', ['signIn', 'setActiveRole']),
+        ...mapActions('user', ['setActiveRole']),
         async submit () {
-            await this.signIn(this.form).then((res)=>{
-                //no roles, make one
-                if(this.user.user_role.length === 0)
-                {
-                    this.$router.push({name: 'chooseRoles'})
-                    return;
-                }
+            await this.$auth.loginWith('laravelSanctum', {
+              data: {
+                email: this.form.email,
+                password: this.form.password
+              }
+            }).then(()=>{
+              //no roles, make one
+              if(this.$auth.user.user_role.length === 0)
+              {
+                this.$router.push({name: 'roles'})
+                return;
+              }
 
-                //check if only one active if it has many
-                let activeRoles = this.user.user_role.filter(userRole => userRole.is_completed === 1);
+              //check if only one active if it has many
+              let activeRoles = this.$auth.user.user_role.filter(userRole => userRole.is_completed === 1);
 
-                //one active role found -> go to it
-                if(activeRoles.length === 1 && this.user.user_role.length === 1)
-                {
-                    this.setActiveRole(activeRoles[0])
-                    this.$router.push({name: 'accountProfile'})
-                }
-                else
-                {
-                    this.$router.push({name: 'chooseRoles'})
-                }
-
+              //one active role found -> go to it
+              if(activeRoles.length === 1 && this.$auth.user.user_role.length === 1)
+              {
+                this.setActiveRole(activeRoles[0])
+                this.$router.push({name: 'account'})
+              }
+              else
+              {
+                this.$router.push({name: 'roles'})
+              }
             }).catch((err) => {
                 for (const [key, msg] of Object.entries(err.response.data.errors)) {
                     this.errors.push(msg[0]);
