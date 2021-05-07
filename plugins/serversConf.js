@@ -1,5 +1,5 @@
 const servers = {
-  imagesBaseURL: 'http://localhost:8001/'
+  imagesBaseURL: 'http://localhost:8000/'
 }
 
 

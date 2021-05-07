@@ -26,11 +26,6 @@ export default {
             loadingStatus: 'Loading data...'
         }
     },
-    computed: {
-        ...mapGetters('auth', {
-            activeRole: 'activeRole',
-        }),
-    },
     mounted() {
         //make the query string
         const query = new QueryBuilder();
@@ -41,7 +36,7 @@ export default {
         query.setFields('address.city.country', ['id', 'name'])
         query.setFields('images', [ 'path'])
 
-        RoleUserProperty.all(this.activeRole.id, query.get()).then((res) => {
+        RoleUserProperty.all(this.$auth.user.active_user_role[0].id, query.get()).then((res) => {
             this.userProperties = res.data.data
             this.loadingStatus = this.userProperties.length === 0 ? 'No properties added.' : ''
         }).catch((error) => {

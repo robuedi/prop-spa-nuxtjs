@@ -1,7 +1,7 @@
 <template>
     <div>
         <template v-for="(btnInfo, btnId) in btns" v-if="btnInfo.roles.includes(activeRole.role_id)">
-            <button type="button" @click="$router.push({name: btnId})" :class="{ 'active' : activeSection === btnId}"  class="mb-5 mr-4 btn btn-outline-dark">
+            <button type="button" @click="$router.push({path: btnId})" :class="{ 'active' : activeSection === btnId}"  class="mb-5 mr-4 btn btn-outline-dark">
                 {{btnInfo.name}}
             </button>
         </template>
@@ -15,6 +15,7 @@ import rolesSections from "../../plugins/account/rolesSections";
 import { mapGetters } from 'vuex'
 
 export default {
+    name: 'AccountNavigation',
     props: {
         activeSection: String
     },
@@ -24,10 +25,9 @@ export default {
         }
     },
     computed: {
-        ...mapGetters('auth', [
-            'user',
-            'activeRole'
-        ]),
+      activeRole() {
+        return this.$auth.user.active_user_role[0]
+      },
     },
     mounted() {
         this.btns = rolesSections

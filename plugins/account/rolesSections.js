@@ -1,17 +1,17 @@
 export default {
-    'accountProfile': {
+    '/account/profile': {
         name: 'Profile',
         roles: [1,2,3,4]
     },
-    'userApplications': {
+    '/account/applications': {
         name: 'Applications',
         roles: [1,2]
     },
-    'userProperties': {
+    '/account/properties': {
         name:'My Properties',
         roles: [3,4]
     },
-    'addProperty': {
+    '/account/addProperty': {
         name:'Add property',
         roles: [3,4]
     },

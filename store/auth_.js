@@ -5,7 +5,6 @@ export const state = () => ({
   authApiState: apiStates.INIT,
   authenticated: false,
   user: null,
-  activeRole : null
 })
 
 export const mutations = {
@@ -15,11 +14,6 @@ export const mutations = {
 
   SET_USER (state, value) {
     state.user = value,
-      state.apiState = apiStates.LOADING
-  },
-
-  SET_ACTIVE_ROLE (state, value) {
-    state.activeRole = value,
       state.apiState = apiStates.LOADING
   },
 
@@ -35,10 +29,6 @@ export const getters = {
 
   user (state) {
     return state.user
-  },
-
-  activeRole (state) {
-    return state.activeRole
   },
 
   userId (state) {
@@ -76,12 +66,6 @@ export const actions = {
   async register ({ dispatch }, user) {
     await Api.get('/sanctum/csrf-cookie')
     return Api.post('/register', user)
-  },
-
-  async signOut ({ dispatch }) {
-    await Api.post('/logout').then(() => {
-      return dispatch('me')
-    })
   },
 
   async me ({ commit }) {

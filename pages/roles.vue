@@ -34,7 +34,7 @@ export default {
         setActiveUserRole(userRole)
         {
             this.setActiveRole(userRole)
-            this.$router.push({name: 'account'})
+            this.$router.push({path: 'account/profile'})
         },
         completeUserRole(userRole)
         {

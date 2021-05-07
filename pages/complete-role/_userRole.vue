@@ -61,7 +61,7 @@ export default {
                     this.$auth.fetchUser().then(() => {
                         let activeRole = this.$auth.user.user_role.filter(userRole => userRole.id === parseInt(this.$route.params.userRole)).shift()
                         this.setActiveRole(activeRole)
-                        this.$router.push({name: 'account'})
+                        this.$router.push({path: '/account/profile'})
                     });
                 }
             }).catch(() => {

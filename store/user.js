@@ -50,7 +50,9 @@ export const actions = {
   async checkUserProfileComplete({dispatch}, userRoleId)
   {
     return await RoleUser.update(userRoleId, {is_completed: 1}).then((res) => {
-      return this.$auth.fetchUser()
+        return this.$auth.fetchUser().then(() => {
+           return res
+        })
     });
   },
 }

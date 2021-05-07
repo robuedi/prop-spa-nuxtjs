@@ -1,6 +1,6 @@
 <template>
     <div class="card " >
-        <div class="card-img-top" v-if="property.images !== 'undefined' && property.images.length > 0 " :style='`background-image: url("/${property.images[0].path}"`'></div>
+        <div class="card-img-top" v-if="property.images !== 'undefined' && property.images.length > 0 " :style='`background-image: url("${imagesBaseURL}${property.images[0].path}"`'></div>
         <div class="card-body">
             <h5 class="card-title">{{property.name}}</h5>
             <p class="card-text">
@@ -12,10 +12,16 @@
 
 <script>
 import moment from 'moment';
+import serversConf from  '../../plugins/serversConf'
 
 export default {
     props: {
         property: Object
+    },
+    data() {
+      return {
+        imagesBaseURL: serversConf.imagesBaseURL
+      }
     },
     methods: {
         formatDate: function (date) {

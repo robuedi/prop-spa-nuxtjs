@@ -57,7 +57,7 @@ export default {
               if(activeRoles.length === 1 && this.$auth.user.user_role.length === 1)
               {
                 this.setActiveRole(activeRoles[0])
-                this.$router.push({name: 'account'})
+                this.$router.push({path: 'account/profile'})
               }
               else
               {

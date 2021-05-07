@@ -60,7 +60,7 @@ export default {
         ...mapGetters('propertiesStatuses',{
             statuses: 'statuses',
         }),
-        ...mapGetters('auth', {
+        ...mapGetters('user', {
             activeRole: 'activeRole',
         }),
     },
@@ -78,7 +78,7 @@ export default {
             //build form data
             this.buildFormData(formData, this.form);
 
-            RoleUserProperty.store(this.activeRole.id, formData).then((res) => {
+            RoleUserProperty.store(this.$auth.user.active_user_role[0].id, formData).then((res) => {
                 this.success.push(`${res.data.data.name} property created.`);
                 this.clearData()
             }).catch((error) => {
